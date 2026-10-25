@@ -37,8 +37,7 @@ The job title comparison is case-insensitive.
 ## Installation
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/Krishu999/Payroll-Management-System.git
 pip install pandas tabulate
 ```
 
