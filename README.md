@@ -1,56 +1,66 @@
 # Payroll Management System
 
-A menu-driven payroll application for automated and secure organizational salary processing, built with Python and MySQL.
-
-## Overview
-
-The system replaces manual payroll work with a centralized, automated process. It manages employee records, salaries, and benefits, and calculates tax deductions accurately.
-
-## Goals
-
-- **Automation:** Automate routine payroll tasks.
-- **Accuracy:** Produce error-free calculations.
-- **Security:** Protect employee and salary data.
-- **Usability:** Provide simple, menu-based navigation.
-- **Scalability:** Adapt as the organization grows.
+A menu-driven command-line payroll manager written in Python. It uses **pandas** for data handling and stores employee records in a **CSV file**, so your data persists between runs.
 
 ## Features
 
-- **Record management:** Add, modify, and delete employee data.
-- **Payroll calculation:** Compute gross salary, tax, and net salary automatically.
-- **Pay slip generation:** Generate individual or batch salary slips.
-- **Menu interface:** Navigate tasks through a command-line menu.
+- Add new employee records (duplicate employee numbers are rejected)
+- Display all employees (summary view) or a single employee (full details)
+- Modify an existing record (press Enter to keep a field unchanged)
+- Delete a single employee or all employees
+- View the complete payroll table with a timestamp
+- Generate a formatted monthly salary slip for any employee
+- Automatic CSV creation if the file doesn't exist yet
 
-## Tech Stack
+## Salary Calculation
 
-- Python
-- MySQL
+DA, HRA and Tax are calculated as a percentage of Basic Salary, depending on the job title:
 
-### Required Python Modules
+| Job     | DA  | HRA | Tax |
+|---------|-----|-----|-----|
+| Officer | 50% | 35% | 15% |
+| Others  | 45% | 30% | 10% |
 
-- `mysql.connector`
-- `datetime`
-- `tabulate`
+```
+Gross Salary = Basic + DA + HRA
+Net Salary   = Gross - Tax
+```
 
-## Getting Started
+The job title comparison is case-insensitive.
 
-1. Install Python and MySQL.
-2. Install the required packages:
-   ```
-   pip install mysql-connector-python tabulate
-   ```
-3. Create the MySQL database and tables used by the application.
-4. Update the database connection settings in the script.
-5. Run the application:
-   ```
-   python main.py
-   ```
+## Requirements
 
-## Development Approach
+- Python 3.7+
+- [pandas](https://pandas.pydata.org/)
+- [tabulate](https://pypi.org/project/tabulate/)
 
-1. **System architecture:** Python script backed by a MySQL database.
-2. **Functional testing:** Validate the system against its requirements.
-3. **Debugging:** Identify and resolve errors.
+## Installation
+
+```bash
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+pip install pandas tabulate
+```
+
+## Usage
+
+```bash
+python payroll_pandas.py
+```
+
+You'll first be asked for a CSV file name (e.g. `employees` or `employees.csv`). If the file exists it is loaded; otherwise a new one is created. Then choose from the main menu:
+
+```
+1. Adding employee records
+2. For displaying records of ALL the employees
+3. For displaying record of a particular employee
+4. For deleting records of ALL the employees
+5. For deleting record of a particular employee
+6. For modification in a record
+7. For displaying payroll
+8. For displaying salary slip for a particular employee
+9. For exit
+```
 
 ## Project Members
 
