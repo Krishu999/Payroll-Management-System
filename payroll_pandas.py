@@ -30,7 +30,7 @@ def calculate_salary(job, basic):
     """Return (da, hra, tax, gross, net) based on job and basic salary."""
     if job.upper() == 'OFFICER':
         da, hra, tax = basic * 0.5, basic * 0.35, basic * 0.15
-    else:  # MANAGER and all other jobs
+    else:
         da, hra, tax = basic * 0.45, basic * 0.30, basic * 0.1
     gross = basic + da + hra
     net = gross - tax
@@ -153,8 +153,6 @@ def modify_record(df, filename):
         x = input('Enter basic salary : ')
         if x:
             basic = float(x)
-
-        # recompute dependent columns so the record stays consistent
         da, hra, tax, gross, net = calculate_salary(job, basic)
         df.loc[idx, COLUMNS[1:]] = [name, job, basic, da, hra, tax, gross, net]
         save_data(df, filename)
@@ -167,12 +165,6 @@ def modify_record(df, filename):
 def display_payroll(df):
     print('\n\n\n')
     print('*' * 90)
-    print_timestamp()
-    display_all(df)
-
-
-def salary_slip_all(df):
-    print('\n\n\n\t\tSALARY SLIP\n')
     print_timestamp()
     display_all(df)
 
@@ -204,9 +196,8 @@ def print_menu():
     print('\t\t5. For deleting record of a particular employee')
     print('\t\t6. For modification in a record')
     print('\t\t7. For displaying payroll')
-    print('\t\t8. For displaying salary slip for all the employees')
-    print('\t\t9. For displaying salary slip for a particular employee')
-    print('\t\t10. For exit')
+    print('\t\t8. For displaying salary slip for a particular employee')
+    print('\t\t9. For exit')
     print('\n\n\n')
 
 
@@ -239,10 +230,8 @@ def main():
         elif choice == 7:
             display_payroll(df)
         elif choice == 8:
-            salary_slip_all(df)
-        elif choice == 9:
             salary_slip_one(df)
-        elif choice == 10:
+        elif choice == 9:
             break
         else:
             print('Wrong choice...')
