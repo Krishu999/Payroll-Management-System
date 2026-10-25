@@ -131,15 +131,11 @@ def modify_record(df, filename):
         idx = df.index[mask][0]
         row = df.loc[idx]
 
-        print('empno : ', row['EmpNo'])
-        print('name : ', row['EmpName'])
-        print('job : ', row['Job'])
-        print('basic : ', row['Basic Salary'])
-        print('da : ', row['DA'])
-        print('hra : ', row['HRA'])
-        print('tax : ', row['Tax'])
-        print('gross : ', row['Gross Salary'])
-        print('net : ', row['Net Salary'])
+        print('Empno : ', row['EmpNo'])
+        print('Name : ', row['EmpName'])
+        print('Job : ', row['Job'])
+        print('Basic : ', row['Basic Salary'])
+        print('Net : ', row['Net Salary'])
         print('-' * 90)
 
         print('Type value to modify below or just press enter for no change')
@@ -167,21 +163,50 @@ def display_payroll(df):
     print('\n\n\n')
     print('*' * 90)
     print_timestamp()
-    display_all(df)
+    if df.empty:
+        print('Nothing to display')
+    else:
+        print(tabulate(df, headers=COLUMNS, tablefmt='fancy_grid', showindex=False))
 
 
 def salary_slip_one(df):
     try:
         empno = int(input('Enter employee number whose pay slip you want to receive: '))
         record = df[df['EmpNo'] == empno]
-        print('\n\n\n\t\tSALARY SLIP\n')
-        print_timestamp()
         if record.empty:
             print('Employee no', empno, 'not found')
-        else:
-            show_table(record)
+            return
+
+        row = record.iloc[0]
+        now = datetime.datetime.now()
+        month_year = now.strftime('%B %Y')
+
+        # Header info
+        header_table = [
+            [f"Salary Slip for {month_year}", ""],
+            [f"Name: {row['EmpName']}", ""],
+            [f"Emp. No: {row['EmpNo']}", ""],
+            [f"Designation: {row['Job']}", ""]
+        ]
+
+        # Earnings & Deductions matching existing parameters
+        financial_table = [
+            ["Earnings", "", "Deductions", ""],
+            ["Basic Salary", row['Basic Salary'], "Tax", row['Tax']],
+            ["Dearness Allowance (DA)", row['DA'], "", ""],
+            ["House Rent Allowance (HRA)", row['HRA'], "", ""],
+            ["Gross Salary", row['Gross Salary'], "Total Deductions", row['Tax']],
+            ["Net Pay", row['Net Salary'], "", ""]
+        ]
+
+        print('\n' + '=' * 65)
+        print(tabulate(header_table, tablefmt='grid'))
+        print(tabulate(financial_table, tablefmt='grid'))
+        print('=' * 65 + '\n')
+
     except Exception as e:
         print('Something went wrong', e)
+
 
 
 # ---------------------------------------------------------------------- menu
