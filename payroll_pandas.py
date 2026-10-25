@@ -8,7 +8,6 @@ COLUMNS = ['EmpNo', 'EmpName', 'Job', 'Basic Salary', 'DA',
 
 
 def load_data(filename):
-    """Read the CSV into a DataFrame, or create an empty one if the file is new."""
     if os.path.exists(filename):
         df = pd.read_csv(filename)
         print('File loaded successfully...')
@@ -20,12 +19,10 @@ def load_data(filename):
 
 
 def save_data(df, filename):
-    """Write the DataFrame back to the CSV file."""
     df.to_csv(filename, index=False)
 
 
 def calculate_salary(job, basic):
-    """Return (da, hra, tax, gross, net) based on job and basic salary."""
     if job.upper() == 'OFFICER':
         da, hra, tax = basic * 0.5, basic * 0.35, basic * 0.15
     else:
