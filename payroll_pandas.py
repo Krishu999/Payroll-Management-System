@@ -76,7 +76,8 @@ def display_all(df):
     if df.empty:
         print('Nothing to display')
     else:
-        show_table(df)
+        selected_cols = ['EmpNo', 'EmpName', 'Job', 'Basic Salary']
+        print(tabulate(df[selected_cols], headers=selected_cols, tablefmt='fancy_grid', showindex=False))
 
 
 def display_one(df):
