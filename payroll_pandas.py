@@ -7,7 +7,6 @@ COLUMNS = ['EmpNo', 'EmpName', 'Job', 'Basic Salary', 'DA',
            'HRA', 'Tax', 'Gross Salary', 'Net Salary']
 
 
-# ---------------------------------------------------------------- file helpers
 def load_data(filename):
     """Read the CSV into a DataFrame, or create an empty one if the file is new."""
     if os.path.exists(filename):
@@ -25,7 +24,6 @@ def save_data(df, filename):
     df.to_csv(filename, index=False)
 
 
-# ------------------------------------------------------------- calculations
 def calculate_salary(job, basic):
     """Return (da, hra, tax, gross, net) based on job and basic salary."""
     if job.upper() == 'OFFICER':
@@ -47,7 +45,6 @@ def print_timestamp():
     print()
 
 
-# ---------------------------------------------------------------- operations
 def add_employee(df, filename):
     try:
         print('Enter employee information...')
@@ -181,7 +178,7 @@ def salary_slip_one(df):
         now = datetime.datetime.now()
         month_year = now.strftime('%B %Y')
 
-        # Header info
+        
         header_table = [
             [f"Salary Slip for {month_year}", ""],
             [f"Name: {row['EmpName']}", ""],
@@ -189,7 +186,6 @@ def salary_slip_one(df):
             [f"Designation: {row['Job']}", ""]
         ]
 
-        # Earnings & Deductions matching existing parameters
         financial_table = [
             ["Earnings", "", "Deductions", ""],
             ["Basic Salary", row['Basic Salary'], "Tax", row['Tax']],
@@ -209,7 +205,6 @@ def salary_slip_one(df):
 
 
 
-# ---------------------------------------------------------------------- menu
 def print_menu():
     print('\n\n\n')
     print('*' * 90)
